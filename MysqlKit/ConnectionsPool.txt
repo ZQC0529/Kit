@@ -1,0 +1,30 @@
+public class DBUtil {
+    /**
+     * 数据库连接
+     */
+    private static Connection connection;
+    static {
+        init();
+    }
+
+    private static void init(){
+        try{
+            Class.forName(("com.mysql.cj.jdbc.Driver"));
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/用户登录?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true&autoReconnect=true&failOverReadOnly=false&&serverTimezone=Asia/Shanghai","root","lxrphp123!!");
+            if (!connection.isClosed()) {
+                System.out.println("数据库连接成功");
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static Connection getConnection() throws SQLException {
+        if(connection!=null&&!connection.isClosed())   {
+            return connection;
+        }
+        init();
+        return connection;
+    }
+}
